@@ -1,0 +1,19 @@
+:root {
+	/* Font-sizing */
+	--font-size-large: 1.5rem;
+	--font-size-medium: 1.25rem;
+	--font-size-small: 1rem;
+
+	/* Colors */
+	--color-primary: #f00;
+	--color-secondary: #0f0;
+	--color-tertiary: #00f;
+
+	font-family: "Roboto", sans-serif;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}

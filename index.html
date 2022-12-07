@@ -9,7 +9,7 @@
 		<title>Category Manager</title>
 	</head>
 	<body>
-		<!-- <header>
+		<header>
 			<h1>Add to inventory</h1>
 		</header>
 
@@ -17,10 +17,25 @@
 			<h2>Create a new category</h2>
 			<input id="form-input" type="text" />
 
-			<h2>Category Logo</h2>
-			<img id="display-logo" class="display-logo" src="" alt="" />
-			<h3>Or choose from a preset:</h3>
+			<h3>Logo:</h3>
 			<select>
-		</form> -->
+				<template id="preset-logo">
+					<option value=""></option>
+				</template>
+			</select>
+
+			<button type="submit">Next</button>
+		</form>
+
+		<ul>
+			<template>
+				<li>
+					<h2></h2>
+					<img src="" alt="" />
+					<button class="edit">Edit</button>
+					<button class="delete">Delete</button>
+				</li>
+			</template>
+		</ul>
 	</body>
 </html>
