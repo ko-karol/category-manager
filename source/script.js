@@ -16,8 +16,8 @@
 
 const form = document.querySelector("#form");
 const categoryNameInput = document.querySelector("#category-name");
-const iconPicker = document.querySelector("#icon-selector");
-const colorPicker = document.querySelector("#color-picker");
+const iconSelector = document.querySelector("#icon-selector");
+const colorSelector = document.querySelector("#color-picker");
 const categoriesList = document.querySelector("#category-list");
 
 //<-- Variables -->
@@ -64,14 +64,21 @@ const categoryTemplate = ({ name, id, icon, color }) => {
 	editButton.textContent = "✏️";
 	deleteButton.textContent = "🗑️";
 
+	deleteButton.addEventListener("click", deleteCategoryHandler);
+	editButton.addEventListener("click", editCategoryHandler);
+
 	return category;
 };
 
-const updateCategories = () => {
-	localStorage.setItem("categories", JSON.stringify(categories));
+const updateCategory = (category) => {
+	localStorage.setItem("categories", JSON.stringify(category));
 };
 
-const getCategories = () => {};
+const getCategories = () => {
+	const storedCategories = JSON.parse(localStorage.getItem("categories"));
+	if (!storedCategories) return;
+	return storedCategories;
+};
 
 //<=== Functions ===>
 
@@ -95,48 +102,55 @@ const checkCategoryName = (categoryName) =>
 		? true
 		: (alert("Category name must be between 4 and 20 characters"), false);
 
-const populateList = (palette, picker, label) =>
+const populateList = (palette, selector, label) =>
 	palette.map((item) => {
 		const option = document.createElement("option");
 		option.value = item[label];
 		option.textContent = item[label];
-		picker.appendChild(option);
+		selector.appendChild(option);
 	});
 
 //<=== Event Handlers ===>
+
+const localStorageHandler = (event) => {
+	const storedCategories = getCategories();
+	storedCategories.map((category) => createCategory(category.name, category.icon, category.color));
+};
 
 const addCategoryHandler = (event) => {
 	event.preventDefault();
 	checkCategoryName(categoryNameInput.value);
 	const categoryName = categoryNameInput.value.trim();
-	const icon = iconPicker.value;
-	const color = colorPicker.value;
+	const icon = iconSelector.value;
+	const color = colorSelector.value;
 
 	if (categoryName) createCategory(categoryName, icon, color);
-	updateCategories();
+	updateCategory(categories);
 };
 
 const colorChangeHandler = (event) => {
 	const color = event.target.value;
-	colorPicker.classList.remove("coral", "blue-green", "freesia", "fuschia", "lilac", "gold");
-	colorPicker.classList.add(color.toLowerCase());
+	colorSelector.classList.remove("coral", "blue-green", "freesia", "fuschia", "lilac", "gold");
+	colorSelector.classList.add(color.toLowerCase());
 };
 
 const deleteCategoryHandler = (event) => {
-	const category = event.target.closest("li");
-	category.remove();
-	updateCategories();
+	// Get the ID of the category
+	// Remove the category from the list
+	// Remove the category from the categories array
+	// Update the localStorage
 };
 
 const editCategoryHandler = (event) => {};
 
 // <=== Event Listeners ===>
 
+window.addEventListener("load", localStorageHandler);
 form.addEventListener("submit", addCategoryHandler);
-colorPicker.addEventListener("change", colorChangeHandler);
+colorSelector.addEventListener("change", colorChangeHandler);
 
 // <=== Program ===>
 
-initialState(colorPicker, "coral");
-populateList(palette.icon, iconPicker, "value");
-populateList(palette.color, colorPicker, "name");
+initialState(colorSelector, "coral");
+populateList(palette.icon, iconSelector, "value");
+populateList(palette.color, colorSelector, "name");
