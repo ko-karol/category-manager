@@ -16,13 +16,13 @@
 
 const form = document.querySelector("#form");
 const categoryNameInput = document.querySelector("#category-name");
-const iconSelector = document.querySelector("#icon-selector");
+const iconPicker = document.querySelector("#icon-selector");
 const colorPicker = document.querySelector("#color-picker");
 const categoriesList = document.querySelector("#category-list");
 
 //<-- Variables -->
 
-const categories = [];
+let categories = [];
 let incrementId = 0;
 
 const palette = {
@@ -54,11 +54,15 @@ const categoryTemplate = ({ name, id, icon, color }) => {
 	const category = template.querySelector("li");
 	const categoryName = template.querySelector("h2");
 	const categoryIcon = template.querySelector("span");
+	const editButton = template.querySelector(".edit");
+	const deleteButton = template.querySelector(".delete");
 
 	category.classList.add(color.toLowerCase());
 	category.id = id;
 	categoryName.textContent = name;
 	categoryIcon.textContent = icon;
+	editButton.textContent = "✏️";
+	deleteButton.textContent = "🗑️";
 
 	return category;
 };
@@ -75,7 +79,15 @@ const createCategory = (categoryName, icon, color) => {
 	incrementId++;
 	const newCategory = categoryTemplate({ name: categoryName, id: "category-" + incrementId, icon: icon, color: color });
 	categoriesList.append(newCategory);
-	return categoriesList;
+
+	const categoryInfo = {
+		name: categoryName,
+		id: incrementId,
+		icon: icon,
+		color: color,
+	};
+
+	categories.push(categoryInfo);
 };
 
 const checkCategoryName = (categoryName) =>
@@ -95,8 +107,9 @@ const populateList = (palette, picker, label) =>
 
 const addCategoryHandler = (event) => {
 	event.preventDefault();
+	checkCategoryName(categoryNameInput.value);
 	const categoryName = categoryNameInput.value.trim();
-	const icon = iconSelector.value;
+	const icon = iconPicker.value;
 	const color = colorPicker.value;
 
 	if (categoryName) createCategory(categoryName, icon, color);
@@ -125,5 +138,5 @@ colorPicker.addEventListener("change", colorChangeHandler);
 // <=== Program ===>
 
 initialState(colorPicker, "coral");
-populateList(palette.icon, iconSelector, "value");
+populateList(palette.icon, iconPicker, "value");
 populateList(palette.color, colorPicker, "name");
