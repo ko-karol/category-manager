@@ -15,27 +15,40 @@
 
 		<form class="form">
 			<h2>Create a new category</h2>
-			<input id="form-input" type="text" />
+			<label for="category-name">Category name:</label>
+			<input id="category-name" type="text" placeholder="Enter a category name (4-20 characters long)" />
 
-			<h3>Logo:</h3>
-			<select>
-				<template id="preset-logo">
-					<option value=""></option>
-				</template>
+			<label for="icon-selector">Icon:</label>
+			<select id="icon-selector">
+				<optgroup label="💼 💰 📗 📘 📙 📕">
+					<template id="preset-icon">
+						<option value=""></option>
+					</template>
+				</optgroup>
 			</select>
 
-			<button type="submit">Next</button>
+			<label for="color-picker">Color:</label>
+			<input id="color-picker" type="color" inputmode="color" />
+			<datalist id="colors">
+				<template id="preset-color">
+					<option value=""></option>
+				</template>
+			</datalist>
+
+			<button id="add" type="submit">Add</button>
 		</form>
 
-		<ul>
-			<template>
+		<ul id="categories">
+			<template id="preset-category">
 				<li>
 					<h2></h2>
-					<img src="" alt="" />
+					<img class="" src="" alt="" />
 					<button class="edit">Edit</button>
 					<button class="delete">Delete</button>
 				</li>
 			</template>
 		</ul>
+		<button class="back">Back</button>
+		<button class="next">Next</button>
 	</body>
 </html>
