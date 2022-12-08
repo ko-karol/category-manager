@@ -13,41 +13,30 @@
 			<h1>Add to inventory</h1>
 		</header>
 
-		<form class="form">
+		<form id="form" class="form">
 			<h2>Create a new category</h2>
 			<label for="category-name">Category name:</label>
 			<input id="category-name" type="text" placeholder="Enter a category name (4-20 characters long)" />
 
 			<label for="icon-selector">Icon:</label>
-			<select id="icon-selector">
-				<optgroup label="💼 💰 📗 📘 📙 📕">
-					<template id="preset-icon">
-						<option value=""></option>
-					</template>
-				</optgroup>
-			</select>
+			<select id="icon-selector"></select>
 
 			<label for="color-picker">Color:</label>
-			<input id="color-picker" type="color" inputmode="color" />
-			<datalist id="colors">
-				<template id="preset-color">
-					<option value=""></option>
-				</template>
-			</datalist>
+			<select id="color-picker"></select>
+			<datalist id="colors"></datalist>
 
 			<button id="add" type="submit">Add</button>
 		</form>
 
 		<ul id="categories">
-			<template id="preset-category">
-				<li>
-					<h2></h2>
-					<img class="" src="" alt="" />
-					<button class="edit">Edit</button>
-					<button class="delete">Delete</button>
-				</li>
-			</template>
+			<li>
+				<h2></h2>
+				<img class="" src="" alt="" />
+				<button class="edit">Edit</button>
+				<button class="delete">Delete</button>
+			</li>
 		</ul>
+
 		<button class="back">Back</button>
 		<button class="next">Next</button>
 	</body>
