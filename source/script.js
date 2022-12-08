@@ -47,6 +47,8 @@ const palette = {
 
 //<=== Helpers ===>
 
+const initialState = (type, value) => type.classList.add(value.toLowerCase());
+
 const categoryTemplate = ({ name, id, icon, color }) => {
 	const template = document.querySelector("#category-template").content.cloneNode(true);
 	const category = template.querySelector("li");
@@ -61,13 +63,6 @@ const categoryTemplate = ({ name, id, icon, color }) => {
 	return category;
 };
 
-const createCategory = (categoryName, icon, color) => {
-	incrementId++;
-	const newCategory = categoryTemplate({ name: categoryName, id: "category-" + incrementId, icon: icon, color: color });
-	categoriesList.append(newCategory);
-	return categories.push(newCategory);
-};
-
 const updateCategories = () => {
 	localStorage.setItem("categories", JSON.stringify(categories));
 };
@@ -75,6 +70,13 @@ const updateCategories = () => {
 const getCategories = () => {};
 
 //<=== Functions ===>
+
+const createCategory = (categoryName, icon, color) => {
+	incrementId++;
+	const newCategory = categoryTemplate({ name: categoryName, id: "category-" + incrementId, icon: icon, color: color });
+	categoriesList.append(newCategory);
+	return categoriesList;
+};
 
 const checkCategoryName = (categoryName) =>
 	categoryName.length >= 4 && categoryName.length <= 20
@@ -101,11 +103,27 @@ const addCategoryHandler = (event) => {
 	updateCategories();
 };
 
+const colorChangeHandler = (event) => {
+	const color = event.target.value;
+	colorPicker.classList.remove("coral", "blue-green", "freesia", "fuschia", "lilac", "gold");
+	colorPicker.classList.add(color.toLowerCase());
+};
+
+const deleteCategoryHandler = (event) => {
+	const category = event.target.closest("li");
+	category.remove();
+	updateCategories();
+};
+
+const editCategoryHandler = (event) => {};
+
 // <=== Event Listeners ===>
 
 form.addEventListener("submit", addCategoryHandler);
+colorPicker.addEventListener("change", colorChangeHandler);
 
 // <=== Program ===>
 
+initialState(colorPicker, "coral");
 populateList(palette.icon, iconSelector, "value");
 populateList(palette.color, colorPicker, "name");
