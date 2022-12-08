@@ -9,10 +9,21 @@
 		<title>Category Manager</title>
 	</head>
 	<body>
+		<template id="category-template">
+			<li class="category-item">
+				<h2 class="category-name"></h2>
+				<span></span>
+				<button class="edit">Edit</button>
+				<button class="delete">Delete</button>
+			</li>
+		</template>
+
 		<header>
 			<h1>Add to inventory</h1>
+
 		</header>
 
+		<img src="&#128188" />
 		<form id="form" class="form">
 			<h2>Create a new category</h2>
 			<label for="category-name">Category name:</label>
@@ -28,14 +39,7 @@
 			<button id="add" type="submit">Add</button>
 		</form>
 
-		<ul id="categories">
-			<li>
-				<h2></h2>
-				<img class="" src="" alt="" />
-				<button class="edit">Edit</button>
-				<button class="delete">Delete</button>
-			</li>
-		</ul>
+		<ul id="category-list" class="category-list"> </ul>
 
 		<button class="back">Back</button>
 		<button class="next">Next</button>

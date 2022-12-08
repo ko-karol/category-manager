@@ -17,3 +17,27 @@
 	padding: 0;
 	box-sizing: border-box;
 }
+
+.coral {
+	background-color: #ff8370;
+}
+
+.blue-green {
+	background-color: #00b1b0;
+}
+
+.freesia {
+	background-color: #fec84d;
+}
+
+.fuschia {
+	background-color: #e42256;
+}
+
+.lilac {
+	background-color: #bd97cb;
+}
+
+.gold {
+	background-color: #fbc740;
+}

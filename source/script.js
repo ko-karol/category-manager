@@ -3,6 +3,9 @@
 
 // When the user clicks ‘Next’, it should display the recently added category, with a ‘Back’ button.
 
+// back button submits
+// next button shows the category as modal
+
 // When the user clicks ‘Back’, the newly created category should now be added back to the list and displayed with the other categories.
 
 // When the user clicks ‘Delete’, symbolized as the "🗑️" icon,  the category should be removed from the list and localStorage.
@@ -17,13 +20,13 @@ const form = document.querySelector("#form");
 const categoryNameInput = document.querySelector("#category-name");
 const iconSelector = document.querySelector("#icon-selector");
 const colorPicker = document.querySelector("#color-picker");
-const categoriesList = document.querySelector("#categories");
+const categoriesList = document.querySelector("#category-list");
 
 //<-- Variables -->
 
 const colorPalette = [
 	{ name: "Coral", color: "#FF8370" },
-	{ name: "Blue Green", color: "#00B1B0" },
+	{ name: "Blue-green", color: "#00B1B0" },
 	{ name: "Freesia", color: "#FEC84D" },
 	{ name: "Fuschia", color: "#E42256" },
 	{ name: "Lilac", color: "#BD97CB" },
@@ -39,13 +42,29 @@ const iconPalette = [
 	{ name: "redbook", value: "📕" },
 ];
 
-//<-- Helper Functions -->
+const categories = [{ name: "", id: "", icon: "", color: "" }];
+let incrementId = 0;
 
-const getColor = (colorName) => colorPalette.find((color) => color.name === colorName).color;
-const getIcon = (iconName) => iconPalette.find((icon) => icon.name === iconName).value;
+const createCategory = (categoryName, icon, color) => {
+	incrementId++;
+	const newCategory = categoryTemplate({ name: categoryName, id: "category-" + incrementId, icon: icon, color: color });
+	categories.push(newCategory);
+	categoriesList.append(newCategory);
+};
 
-//create a category object for the category list
-const createCategory = (categoryName, icon, color) => {};
+const categoryTemplate = ({ name, id, icon, color }) => {
+	const template = document.querySelector("#category-template").content.cloneNode(true);
+	const category = template.querySelector("li");
+	const categoryName = template.querySelector("h2");
+	const categoryIcon = template.querySelector("span");
+
+	category.classList.add(color.toLowerCase());
+	category.id = id;
+	categoryName.textContent = name;
+	categoryIcon.textContent = icon;
+
+	return category;
+};
 
 //update the localStorage object with all the categories
 const updateLocalStorage = (categories) => {};
@@ -55,45 +74,33 @@ const getCategories = () => {};
 
 //<=== Functions ===>
 
-// Category name should be a string of 4-20 characters.
-
 const checkCategoryName = (categoryName) =>
 	categoryName.length >= 4 && categoryName.length <= 20
 		? true
 		: (alert("Category name must be between 4 and 20 characters"), false);
 
-// Function to populate the icon selector with the icons from the iconPalette
-
-const populateIconList = () =>
-	iconPalette.map((icon) => {
+const populateList = (palette, picker, label) =>
+	palette.map((item) => {
 		const option = document.createElement("option");
-		option.value = icon.value;
-		option.textContent = icon.value;
-		iconSelector.appendChild(option);
+		option.value = item[label];
+		option.textContent = item[label];
+		picker.appendChild(option);
 	});
 
-// Function to populate the color picker with the colors from the colorPalette
+const addCategoryHandler = (event) => {
+	event.preventDefault();
+	const categoryName = categoryNameInput.value.trim();
+	const icon = iconSelector.value;
+	const color = colorPicker.value;
 
-const populateColorList = () =>
-	colorPalette.map((color) => {
-		const option = document.createElement("option");
-		option.value = color.color;
-		option.textContent = color.name;
-		colorPicker.appendChild(option);
-	});
-
-// When the user clicks "Add", the category should be added to a list of categories.
-
-const addCategory = () => {};
+	if (categoryName) createCategory(categoryName, icon, color);
+};
 
 // <=== Event Listeners ===>
 
-form.addEventListener("submit", (e) => {
-	e.preventDefault();
-	addCategory();
-});
+form.addEventListener("submit", addCategoryHandler);
 
 // <=== Program ===>
 
-populateIconList();
-populateColorList();
+populateList(iconPalette, iconSelector, "value");
+populateList(colorPalette, colorPicker, "name");
