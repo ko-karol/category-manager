@@ -70,22 +70,27 @@ const categoryTemplate = ({ name, id, icon, color }) => {
 	return category;
 };
 
-const updateCategory = (category) => {
+const setCategoryInLocalStorage = (category) => {
 	localStorage.setItem("categories", JSON.stringify(category));
 };
 
-const getCategories = () => {
+const getCategoriesFromLocalStorage = () => {
 	const storedCategories = JSON.parse(localStorage.getItem("categories"));
-	if (!storedCategories) return;
 	return storedCategories;
 };
 
+const validateCategoryName = (categoryName) =>
+	categoryName.length >= 4 && categoryName.length <= 20
+		? "isValidCategoryName"
+		: (alert("Category name must be between 4 and 20 characters"), "isNotValidCategoryName");
+
 //<=== Functions ===>
 
-const createCategory = (categoryName, icon, color) => {
-	incrementId++;
+const createNewCategory = (categoryName, icon, color) => {
 	const newCategory = categoryTemplate({ name: categoryName, id: "category-" + incrementId, icon: icon, color: color });
 	categoriesList.append(newCategory);
+
+	incrementId++;
 
 	const categoryInfo = {
 		name: categoryName,
@@ -96,11 +101,6 @@ const createCategory = (categoryName, icon, color) => {
 
 	categories.push(categoryInfo);
 };
-
-const checkCategoryName = (categoryName) =>
-	categoryName.length >= 4 && categoryName.length <= 20
-		? true
-		: (alert("Category name must be between 4 and 20 characters"), false);
 
 const populateList = (palette, selector, label) =>
 	palette.map((item) => {
@@ -113,19 +113,19 @@ const populateList = (palette, selector, label) =>
 //<=== Event Handlers ===>
 
 const localStorageHandler = (event) => {
-	const storedCategories = getCategories();
-	storedCategories.map((category) => createCategory(category.name, category.icon, category.color));
+	const storedCategories = getCategoriesFromLocalStorage();
+	storedCategories.map((category) => createNewCategory(category.name, category.icon, category.color));
 };
 
 const addCategoryHandler = (event) => {
 	event.preventDefault();
-	checkCategoryName(categoryNameInput.value);
+	validateCategoryName(categoryNameInput.value);
 	const categoryName = categoryNameInput.value.trim();
 	const icon = iconSelector.value;
 	const color = colorSelector.value;
 
-	if (categoryName) createCategory(categoryName, icon, color);
-	updateCategory(categories);
+	if (categoryName) createNewCategory(categoryName, icon, color);
+	setCategoryInLocalStorage(categories);
 };
 
 const colorChangeHandler = (event) => {
@@ -134,14 +134,20 @@ const colorChangeHandler = (event) => {
 	colorSelector.classList.add(color.toLowerCase());
 };
 
-const deleteCategoryHandler = (event) => {
-	// Get the ID of the category
-	// Remove the category from the list
-	// Remove the category from the categories array
-	// Update the localStorage
+const deleteCategoryHandler = (event) => { //! Broken. Removes the wrong category from localStorage
+	const category = event.target.parentElement;
+	const categoryId = category.getAttribute("id");
+	const categoryIndex = categories.findIndex((category) => category.id === parseInt(categoryId));
+	categories.splice(categoryIndex, 1);
+	category.remove();
+	setCategoryInLocalStorage(categories);
 };
 
-const editCategoryHandler = (event) => {};
+const editCategoryHandler = (event) => {
+	// Get the category from the categories array
+	// Populate the form with the category info
+	// Remove the category from the list
+};
 
 // <=== Event Listeners ===>
 
