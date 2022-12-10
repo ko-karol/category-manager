@@ -1,25 +1,25 @@
 :root {
 	/* Font-sizing */
-	--font-size-xlarge: clamp(1.5rem, 5vw, 3rem);
-	--font-size-large: clamp(1.25rem, 5vw, 2.5rem);
-	--font-size-medium: clamp(1rem, 5vw, 2rem);
-	--font-size-small: clamp(0.75rem, 5vw, 1.5rem);
+	--fontSizeHuge: clamp(1.5rem, 5vw, 3rem);
+	--fontSizeLarge: clamp(1.25rem, 5vw, 2.5rem);
+	--fontSizeMedium: clamp(1rem, 5vw, 2rem);
+	--fontSizeSmall: clamp(0.75rem, 5vw, 1.5rem);
 
 	/* Font-weights */
-	--font-weight-light: 300;
-	--font-weight-normal: 400;
-	--font-weight-medium: 500;
-	--font-weight-bold: 700;
+	--fontWeightLight: 300;
+	--fontWeightNormal: 400;
+	--fontWeightMedium: 500;
+	--fontWeightBold: 700;
 
 	/* Guidelines */
-	--gap-small: 0.5rem;
-	--gap-medium: 1rem;
-	--gap-large: 1.5rem;
+	--gapSmall: 0.5rem;
+	--gapMedium: 1rem;
+	--gapLarge: 1.5rem;
 
 	/* Colors */
-	--color-primary: #4dcef2;
-	--color-secondary: #4dadf2;
-	--color-tertiary: #4d8cf2;
+	--colorPrimary: #4dcef2;
+	--colorSecondary: #4dadf2;
+	--colorTertiary: #4d8cf2;
 }
 
 * {
@@ -30,11 +30,11 @@
 }
 
 .content {
-	background-color: var(--color-primary);
-	box-shadow: 0 0 10px 0 var(--color-secondary);
-	border: 1px solid var(--color-secondary);
-	gap: var(--gap-medium);
-	padding: var(--gap-medium);
+	background-color: var(--colorPrimary);
+	box-shadow: 0 0 10px 0 var(--colorSecondary);
+	border: 1px solid var(--colorSecondary);
+	gap: var(--gapMedium);
+	padding: var(--gapMedium);
 	display: flex;
 	flex-direction: column;
 	width: fit-content;
@@ -44,81 +44,104 @@
 }
 
 .title {
-	font-size: var(--font-size-xlarge);
-	font-weight: var(--font-weight-bold);
+	font-size: var(--fontSizeHuge);
+	font-weight: var(--fontWeightBold);
 }
 
 .form {
-	gap: var(--gap-small);
+	gap: var(--gapSmall);
 	display: flex;
 	flex-direction: column;
 }
 
 .form__heading {
-	font-size: var(--font-size-medium);
-	margin-bottom: var(--gap-small);
+	font-size: var(--fontSizeMedium);
+	margin-bottom: var(--gapSmall);
 }
 
 .form-name__input {
+	padding: var(--gapSmall);
+	font-size: var(--fontSizeSmall);
+	border: 1px solid var(--colorSecondary);
 	width: 100%;
-	padding: var(--gap-small);
-	font-size: var(--font-size-small);
-	border: 1px solid var(--color-secondary);
 }
 
 .selector-container {
-	gap: var(--gap-small);
+	gap: var(--gapSmall);
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
 }
 
 .form-icon__input {
-	font-size: var(--font-size-large);
-	background-color: var(--color-primary);
+	font-size: var(--fontSizeLarge);
+	background-color: var(--colorPrimary);
 	padding: fit-content;
-	border: none;
+	cursor: pointer;
+	border: 1px solid var(--colorSecondary);
 }
 
 .form-color__input {
-	padding: var(--gap-small);
-	border: none;
+	padding: var(--gapSmall);
+	border: 1px solid var(--colorSecondary);
 }
 
 .button {
-	font-size: var(--font-size-medium);
-	font-weight: var(--font-weight-bold);
-	padding: var(--gap-small);
+	background-color: var(--colorSecondary);
+	font-weight: var(--fontWeightBold);
+	font-size: var(--fontSizeMedium);
+	padding: var(--gapSmall);
 	border: none;
 	border-radius: 5px;
-	background-color: var(--color-secondary);
 	color: white;
 	cursor: pointer;
+	align-self: center;
+	max-width: 50%;
 }
 
 .content-separator {
-	margin: var(--gap-medium) 0;
-	border: 1px solid var(--color-secondary);
+	margin: var(--gapMedium) 0;
+	border: 1px solid var(--colorSecondary);
+}
+
+.category-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.category-logo,
+.edit,
+.delete {
+	font-size: var(--fontSizeSmall);
+	cursor: pointer;
 }
 
 /* Hover and focus states */
 
 .form-name__input:hover {
-	background-color: var(--color-secondary);
+	background-color: var(--colorSecondary);
 }
 
 .form-name__input:focus {
-	background-color: var(--color-tertiary);
+	background-color: var(--colorTertiary);
 }
 
 .button:hover {
-	background-color: var(--color-secondary);
+	background-color: var(--colorSecondary);
 }
 
 .button:active {
-	background-color: var(--color-tertiary);
+	background-color: var(--colorTertiary);
 }
 
+.category-item:hover {
+	background-color: var(--colorSecondary);
+}
+
+.category-item:active {
+	background-color: var(--colorTertiary);
+}
 /* Category Color Presets */
 
 .coral {
