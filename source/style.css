@@ -1,43 +1,132 @@
 :root {
 	/* Font-sizing */
+	--font-size-xlarge: 2rem;
 	--font-size-large: 1.5rem;
 	--font-size-medium: 1.25rem;
 	--font-size-small: 1rem;
 
-	/* Colors */
-	--color-primary: #f00;
-	--color-secondary: #0f0;
-	--color-tertiary: #00f;
+	/* Font-weights */
+	--font-weight-light: 300;
+	--font-weight-normal: 400;
+	--font-weight-medium: 500;
+	--font-weight-bold: 700;
 
-	font-family: "Roboto", sans-serif;
+	/* Guidelines */
+	--gap-small: 0.5rem;
+	--gap-medium: 1rem;
+	--gap-large: 1.5rem;
+
+	/* Breakpoints */
+
+	/* Colors */
+	--color-primary: #4dcef2;
+	--color-secondary: #4dadf2;
+	--color-tertiary: #4d8cf2;
+
+	/* Color presets */
+	--color-coral: #ff8370;
+	--color-blue-green: #00b1b0;
+	--color-freesia: #fec84d;
+	--color-fuschia: #e42256;
+	--color-lilac: #bd97cb;
+	--color-pinkish: #fcc2d2;
 }
 
 * {
+	font-family: "Roboto", sans-serif;
+	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
-	box-sizing: border-box;
 }
+
+/* Design spec:
+Has to be fully mobile first, then tablet, then desktop.
+Has to be fully responsive.
+Category manager list
+Copy the design from reference.bmp (in the source folder)
+Only uses classes from index.html one folder up and no specific element selectors
+*/
+
+body {
+	background-color: var(--color-primary);
+}
+
+.content {
+	gap: var(--gap-medium);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.title {
+	font-size: var(--font-size-medium);
+	font-weight: var(--font-weight-bold);
+}
+
+.form {
+	gap: var(--gap-small);
+	display: flex;
+	flex-direction: column;
+}
+
+.form__heading {
+	font-size: var(--font-size-medium);
+	margin-bottom: var(--gap-small);
+}
+
+.form-name__input {
+	width: 100%;
+	padding: var(--gap-small);
+	font-size: var(--font-size-small);
+	border: 1px solid var(--color-secondary);
+}
+
+.selector-container {
+	display: flex;
+	justify-content: space-evenly;
+	gap: var(--gap-small);
+	align-items: center;
+}
+
+.form-icon__input {
+	font-size: var(--font-size-large);
+	background-color: var(--color-primary);
+	padding: fit-content;
+	border: none;
+}
+
+.form-color__input {
+	padding: var(--gap-small);
+	border: none;
+}
+
+/* Hover and focus states */
+
+.form-name__input:hover {
+	background-color: var(--color-secondary);
+}
+
+.form-name__input:focus {
+	background-color: var(--color-tertiary);
+}
+
+/* Category Color Presets */
 
 .coral {
-	background-color: #ff8370;
+	background-color: var(--color-coral);
 }
-
 .blue-green {
-	background-color: #00b1b0;
+	background-color: var(--color-blue-green);
 }
-
 .freesia {
-	background-color: #fec84d;
+	background-color: var(--color-freesia);
 }
-
 .fuschia {
-	background-color: #e42256;
+	background-color: var(--color-fuschia);
 }
-
 .lilac {
-	background-color: #bd97cb;
+	background-color: var(--color-lilac);
 }
-
-.gold {
-	background-color: #fbc740;
+.pinkish {
+	background-color: var(--color-pinkish);
 }

@@ -11,34 +11,38 @@
 	<body>
 		<template id="category-template">
 			<li class="category-item">
+				<span class="category-logo"></span>
 				<h2 class="category-name"></h2>
-				<span></span>
 				<button class="edit">Edit</button>
 				<button class="delete">Delete</button>
 			</li>
 		</template>
 
-		<header>
-			<h1>Add to inventory</h1>
-		</header>
-		<form id="form" class="form">
-			<h2>Create a new category</h2>
-			<label for="category-name">Category name:</label>
-			<input id="category-name" type="text" placeholder="Enter a category name (4-20 characters long)" />
+		<main class="content">
+			<form id="form" class="form">
+                <h1 class="title">Add to inventory</h1>
+                <h2 class="form__heading">Create a new category</h2>
+				<label for="category-name" class="form-name__label">Category name:</label>
+				<input
+					id="category-name"
+                    class="form-name__input"
+					type="text"
+					placeholder="Enter a category name">
+                </input>
+                <div class="selector-container">
+				    <label for="icon-selector" class="form-icon__label">Icon:</label>
+				    <select id="icon-selector" class="form-icon__input"></select>
 
-			<label for="icon-selector">Icon:</label>
-			<select id="icon-selector"></select>
+				    <label for="color-picker" class="form-color__label">Color:</label>
+				    <select id="color-picker" class="form-color__input"></select>
+                </div>
 
-			<label for="color-picker">Color:</label>
-			<select id="color-picker"></select>
-			<datalist id="colors"></datalist>
+				<button id="add" class="form__submit" type="submit">Next</button>
+			</form>
 
-			<button id="add" type="submit">Add</button>
-		</form>
+			<ul id="category-list" class="category-list"> </ul>
 
-		<ul id="category-list" class="category-list"> </ul>
-
-		<button class="back">Back</button>
-		<button class="next">Next</button>
+			<button class="back">Back</button>
+		</main>
 	</body>
 </html>

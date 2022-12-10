@@ -32,7 +32,7 @@ const palette = {
 		{ name: "Freesia", color: "#FEC84D" },
 		{ name: "Fuschia", color: "#E42256" },
 		{ name: "Lilac", color: "#BD97CB" },
-		{ name: "Gold", color: "#FBC740" },
+		{ name: "Pinkish", color: "#FCC2D2" },
 	],
 
 	icon: [
@@ -52,8 +52,8 @@ const initialState = (type, value) => type.classList.add(value.toLowerCase());
 const categoryTemplate = ({ name, id, icon, color }) => {
 	const template = document.querySelector("#category-template").content.cloneNode(true);
 	const category = template.querySelector("li");
-	const categoryName = template.querySelector("h2");
 	const categoryIcon = template.querySelector("span");
+	const categoryName = template.querySelector("h2");
 	const editButton = template.querySelector(".edit");
 	const deleteButton = template.querySelector(".delete");
 
@@ -107,6 +107,7 @@ const populateList = (palette, selector, label) =>
 		const option = document.createElement("option");
 		option.value = item[label];
 		option.textContent = item[label];
+		option.classList.add(item[label].toLowerCase());
 		selector.appendChild(option);
 	});
 
@@ -117,7 +118,7 @@ const localStorageHandler = (event) => {
 	storedCategories.map((category) => createNewCategory(category.name, category.icon, category.color));
 };
 
-const addCategoryHandler = (event) => {
+const nextCategoryHandler = (event) => {
 	event.preventDefault();
 	validateCategoryName(categoryNameInput.value);
 	const categoryName = categoryNameInput.value.trim();
@@ -130,11 +131,14 @@ const addCategoryHandler = (event) => {
 
 const colorChangeHandler = (event) => {
 	const color = event.target.value;
-	colorSelector.classList.remove("coral", "blue-green", "freesia", "fuschia", "lilac", "gold");
+	colorSelector.classList.remove(colorSelector.classList[1]);
 	colorSelector.classList.add(color.toLowerCase());
+
+	//for each
 };
 
-const deleteCategoryHandler = (event) => { //! Broken. Removes the wrong category from localStorage
+const deleteCategoryHandler = (event) => {
+	//! Broken. Removes the wrong category from localStorage
 	const category = event.target.parentElement;
 	const categoryId = category.getAttribute("id");
 	const categoryIndex = categories.findIndex((category) => category.id === parseInt(categoryId));
@@ -152,11 +156,11 @@ const editCategoryHandler = (event) => {
 // <=== Event Listeners ===>
 
 window.addEventListener("load", localStorageHandler);
-form.addEventListener("submit", addCategoryHandler);
+form.addEventListener("submit", nextCategoryHandler);
 colorSelector.addEventListener("change", colorChangeHandler);
 
 // <=== Program ===>
 
-initialState(colorSelector, "coral");
+initialState(colorSelector, "Coral");
 populateList(palette.icon, iconSelector, "value");
 populateList(palette.color, colorSelector, "name");
