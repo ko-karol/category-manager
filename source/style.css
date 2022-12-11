@@ -1,7 +1,7 @@
 :root {
 	/* Font-sizing */
 	--fontSizeHuge: clamp(1.5rem, 5vw, 3rem);
-	--fontSizeLarge: clamp(1.25rem, 5vw, 2.5rem);
+	--fontSizeLarge: clamp(1rem, 5vw, 2rem);
 	--fontSizeMedium: clamp(1rem, 5vw, 2rem);
 	--fontSizeSmall: clamp(0.75rem, 5vw, 1.5rem);
 
@@ -55,7 +55,7 @@
 }
 
 .form__heading {
-	font-size: var(--fontSizeMedium);
+	font-size: var(--fontSizeLarge);
 	margin-bottom: var(--gapSmall);
 }
 
@@ -95,8 +95,7 @@
 	border-radius: 5px;
 	color: white;
 	cursor: pointer;
-	align-self: center;
-	max-width: 50%;
+	align-self: flex-end;
 }
 
 .content-separator {
@@ -104,44 +103,46 @@
 	border: 1px solid var(--colorSecondary);
 }
 
+.left-column,
+.right-column,
 .category-item {
 	display: flex;
 	align-items: center;
+}
+
+.modal {
+    height: 20vh;
+}
+
+.hidden {
+	display: none;
+}
+
+.category-item {
 	justify-content: space-between;
 }
 
-.category-logo,
-.edit,
-.delete {
-	font-size: var(--fontSizeSmall);
-	cursor: pointer;
+.left-column {
+	justify-content: flex-start;
+}
+
+.right-column {
+	justify-content: flex-end;
 }
 
 /* Hover and focus states */
 
-.form-name__input:hover {
-	background-color: var(--colorSecondary);
-}
-
-.form-name__input:focus {
-	background-color: var(--colorTertiary);
-}
-
-.button:hover {
-	background-color: var(--colorSecondary);
-}
-
-.button:active {
-	background-color: var(--colorTertiary);
-}
-
+.form-name__input:hover,
+.button:hover,
 .category-item:hover {
 	background-color: var(--colorSecondary);
 }
 
+.button:active,
 .category-item:active {
 	background-color: var(--colorTertiary);
 }
+
 /* Category Color Presets */
 
 .coral {

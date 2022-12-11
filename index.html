@@ -11,10 +11,14 @@
 	<body>
 		<template id="category-template">
 			<li class="category-item">
-				<span class="category-logo"></span>
-				<h2 class="category-name"></h2>
-				<button class="edit">Edit</button>
-				<button class="delete">Delete</button>
+                <div class="left-column">
+				    <span class="category-logo"></span>
+				    <h2 class="category-name"></h2>
+                </div>
+                <div class="right-column">
+				    <button class="button edit">Edit</button>
+				    <button class="button delete">Delete</button>
+                </div>
 			</li>
 		</template>
 
@@ -22,20 +26,23 @@
 			<form id="form" class="form">
                 <h1 class="title">Add to inventory</h1>
                 <h2 class="form__heading">Create a new category</h2>
-				<label for="category-name" class="form-name__label">Category name:</label>
+				<label for="form-name-input" class="form-name__label">Category name:</label>
 				<input
-					id="category-name"
+					id="form-name-input"
                     class="form-name__input"
 					type="text"
 					placeholder="Enter a category name">
                 </input>
 
                 <div class="selector-container">
-				    <label for="icon-selector" class="form-icon__label">Icon:</label>
-				    <select id="icon-selector" class="form-icon__input"></select>
-
-				    <label for="color-picker" class="form-color__label">Color:</label>
-				    <select id="color-picker" class="form-color__input"></select>
+                    <div class="left-column">
+				        <label for="icon-selector" class="form-icon__label">Icon:</label>
+				        <select id="icon-selector" class="form-icon__input"></select>
+                    </div>
+                    <div class="right-column">
+				        <label for="color-picker" class="form-color__label">Color:</label>
+				        <select id="color-picker" class="form-color__input"></select>
+                    </div>
                 </div>
 
 				<button id="add" class="button button__next" type="submit">Next</button>
@@ -44,8 +51,6 @@
             <div class="content-separator"></div>
 
 			<ul id="category-list" class="category-list"> </ul>
-
-			<button class="button button__back">Back</button>
 		</main>
 	</body>
 </html>
