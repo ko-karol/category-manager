@@ -1,19 +1,3 @@
-// Your mini-app should take user input for:
-// a category name, a category icon, and a category colour.
-
-// When the user clicks ‘Next’, it should display the recently added category, with a ‘Back’ button.
-
-// back button submits
-// next button shows the category as modal
-
-// When the user clicks ‘Back’, the newly created category should now be added back to the list and displayed with the other categories.
-
-// When the user clicks ‘Delete’, symbolized as the "🗑️" icon,  the category should be removed from the list and localStorage.
-
-// When the user clicks "Edit", symbolized as the "✏️" icon, the category should be editable using the same input fields as when the category was created.
-
-//<-- Elements -->
-
 const form = document.querySelector("#form");
 const categoryNameInput = document.querySelector("#form-name-input");
 const iconSelector = document.querySelector("#icon-selector");
@@ -22,8 +6,8 @@ const categoriesList = document.querySelector("#category-list");
 
 //<-- Variables -->
 
-let categoriesArray = [];
-let incrementId = 0;
+let categoriesArray = JSON.parse(localStorage.getItem("categories")) || [];
+let incrementId = categoriesArray ? categoriesArray.length : 0;
 
 const palette = {
 	color: [
@@ -49,9 +33,8 @@ const palette = {
 
 const initialState = (type, value) => type.classList.add(value.toLowerCase());
 const setCategoryInLocalStorage = (category) => localStorage.setItem("categories", JSON.stringify(category));
-const getCategoriesFromLocalStorage = () => (storedCategories = JSON.parse(localStorage.getItem("categories")));
 
-const populateList = (palette, selector, label) =>
+const populateList = (palette, selector, label) => {
 	palette.map((item) => {
 		const option = document.createElement("option");
 		option.value = item[label];
@@ -59,63 +42,61 @@ const populateList = (palette, selector, label) =>
 		option.classList.add(item[label].toLowerCase());
 		selector.appendChild(option);
 	});
+};
 
-const validateCategoryName = (categoryName) =>
+const validateCategoryName = (categoryName) => {
 	categoryName.length >= 4 && categoryName.length <= 20
 		? "isValidCategoryName"
 		: (alert("Category name must be between 4 and 20 characters"), "isNotValidCategoryName");
+};
 
 //<=== Functions ===>
 
 const createNewCategory = (categoryName, icon, color) => {
-	const categoryTemplate = ({ name, id, icon, color }) => {
-		const template = document.querySelector("#category-template").content.cloneNode(true);
+	const categoryTemplate = (id, name, icon, color) => {
+		const categoryTemplate = document.querySelector("#category-template").content.cloneNode(true);
 
-		const [category, categoryIcon, categoryName, editButton, deleteButton] =
-			template.querySelectorAll("li, span, h2, button, button");
+		const newCategory = categoryTemplate.querySelector("li");
+		const newCategoryName = categoryTemplate.querySelector("h2");
+		const newCategoryIcon = categoryTemplate.querySelector("span");
+		const newCategoryEdit = categoryTemplate.querySelector(".edit");
+		const newCategoryDelete = categoryTemplate.querySelector(".delete");
 
-		category.classList.add(color.toLowerCase());
-		category.id = id;
+		newCategory.classList.add(color.toLowerCase());
+		newCategory.id = id;
 
-		categoryName.textContent = name;
-		categoryIcon.textContent = icon;
-		editButton.textContent = "✏️";
-		deleteButton.textContent = "🗑️";
+		newCategoryName.textContent = name;
+		newCategoryIcon.textContent = icon;
+		newCategoryEdit.textContent = "✏️";
+		newCategoryDelete.textContent = "🗑️";
 
-		deleteButton.addEventListener("click", deleteCategoryHandler);
-		editButton.addEventListener("click", editCategoryHandler);
+		newCategoryDelete.addEventListener("click", deleteCategoryHandler);
+		newCategoryEdit.addEventListener("click", editCategoryHandler);
 		//category.addEventListener("click", showCategoryHandler);
 
-		return category;
+		return newCategory;
 	};
 
-	const newCategory = categoryTemplate({
-		name: categoryName,
-		id: "category-" + incrementId++,
-		icon: icon,
-		color: color,
-	});
+	const newCategory = categoryTemplate(incrementId++, categoryName, icon, color);
 
 	categoriesList.append(newCategory);
-	categoriesArray.push({ name: categoryName, id: incrementId, icon, color });
+	categoriesArray.push({ id: incrementId, name: categoryName, icon: icon, color: color });
 };
 
 //<=== Event Handlers ===>
 
 const localStorageHandler = (event) => {
-	const storedCategories = getCategoriesFromLocalStorage();
-	storedCategories.map((category) => createNewCategory(category.name, category.icon, category.color));
+	if (categoriesArray)
+		categoriesArray.map((category) => createNewCategory(category.name, category.icon, category.color));
 };
 
-const nextCategoryHandler = (event) => {
+const addCategoryHandler = (event) => {
 	event.preventDefault();
-	validateCategoryName(categoryNameInput.value);
 	const categoryName = categoryNameInput.value.trim();
 	const icon = iconSelector.value;
 	const color = colorSelector.value;
-
-	if (categoryName) createNewCategory(categoryName, icon, color);
-
+	validateCategoryName(categoryName);
+	createNewCategory(categoryName, icon, color);
 	setCategoryInLocalStorage(categoriesArray);
 };
 
@@ -144,10 +125,13 @@ const colorChangeHandler = (event) => {
 
 const deleteCategoryHandler = (event) => {
 	const category = event.target.closest("li");
-	const categoryIndex = categoriesArray.findIndex((item) => item.id === category.id);
-	categoriesArray.splice(categoryIndex, 1);
-	setCategoryInLocalStorage(categoriesArray);
+	const categoryName = category.querySelector("h2");
+	const categoryId = category.id.toString();
+	//const categoryIndex = categoriesArray.findIndex((category) => category.name === categoryName);
+	//categoriesArray.splice(categoryIndex, 1);
+
 	category.remove();
+	setCategoryInLocalStorage(categoriesArray);
 };
 
 const editCategoryHandler = (event) => {
@@ -165,15 +149,15 @@ const backHandler = (event) => {
 	category.classList.remove("modal");
 	event.target.remove();
 };
-// <=== Event Listeners ===>
-
-window.addEventListener("load", localStorageHandler);
-form.addEventListener("submit", nextCategoryHandler);
-colorSelector.addEventListener("change", colorChangeHandler);
 
 // <=== Program ===>
 
 initialState(iconSelector, "Coral");
 initialState(colorSelector, "Coral");
+
 populateList(palette.icon, iconSelector, "value");
 populateList(palette.color, colorSelector, "name");
+
+window.addEventListener("load", localStorageHandler);
+form.addEventListener("submit", addCategoryHandler);
+colorSelector.addEventListener("change", colorChangeHandler);
