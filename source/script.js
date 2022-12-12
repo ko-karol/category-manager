@@ -6,8 +6,8 @@ const categoriesList = document.querySelector("#category-list");
 
 //<-- Variables -->
 
-let categoriesArray = JSON.parse(localStorage.getItem("categories")) || [];
-let incrementId = categoriesArray ? categoriesArray.length : 0;
+let categoriesArray = [];
+let incrementId = categoriesArray.length;
 
 const palette = {
 	color: [
@@ -80,14 +80,14 @@ const createNewCategory = (categoryName, icon, color) => {
 	const newCategory = categoryTemplate(incrementId++, categoryName, icon, color);
 
 	categoriesList.append(newCategory);
-	categoriesArray.push({ id: incrementId, name: categoryName, icon: icon, color: color });
+	categoriesArray.push({ id: `${incrementId}`, name: categoryName, icon: icon, color: color });
 };
 
 //<=== Event Handlers ===>
 
 const localStorageHandler = (event) => {
-	if (categoriesArray)
-		categoriesArray.map((category) => createNewCategory(category.name, category.icon, category.color));
+	const categories = JSON.parse(localStorage.getItem("categories"));
+	categories.map((category) => createNewCategory(category.name, category.icon, category.color));
 };
 
 const addCategoryHandler = (event) => {
@@ -126,12 +126,11 @@ const colorChangeHandler = (event) => {
 const deleteCategoryHandler = (event) => {
 	const category = event.target.closest("li");
 	const categoryName = category.querySelector("h2");
-	const categoryId = category.id.toString();
-	//const categoryIndex = categoriesArray.findIndex((category) => category.name === categoryName);
-	//categoriesArray.splice(categoryIndex, 1);
-
-	category.remove();
+	const categoryId = parseInt(category.id);
+	const categoryIndex = categoriesArray.findIndex((category) => category.id == categoryId) + 1;
+	categoriesArray.splice(categoryIndex, 1);
 	setCategoryInLocalStorage(categoriesArray);
+	category.remove();
 };
 
 const editCategoryHandler = (event) => {
