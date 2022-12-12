@@ -1,13 +1,13 @@
-const form = document.querySelector("#form");
-const categoryNameInput = document.querySelector("#form-name-input");
-const iconSelector = document.querySelector("#icon-selector");
-const colorSelector = document.querySelector("#color-picker");
-const categoriesList = document.querySelector("#category-list");
+//<==== Variables ====>
 
-//<-- Variables -->
+const categoryList = document.querySelector("#category-list");
 
-let categoriesArray = [];
-let incrementId = categoriesArray.length;
+const formElements = {
+	form: document.querySelector("#form"),
+	formNameInput: document.querySelector("#form-name-input"),
+	iconSelector: document.querySelector("#icon-selector"),
+	colorPicker: document.querySelector("#color-picker"),
+};
 
 const palette = {
 	color: [
@@ -29,31 +29,15 @@ const palette = {
 	],
 };
 
-//<=== Helpers ===>
+let categoryArray = [];
+let incrementId = categoryArray.length;
 
-const initialState = (type, value) => type.classList.add(value.toLowerCase());
+//<==== Functions ====>
+
 const setCategoryInLocalStorage = (category) => localStorage.setItem("categories", JSON.stringify(category));
 
-const populateList = (palette, selector, label) => {
-	palette.map((item) => {
-		const option = document.createElement("option");
-		option.value = item[label];
-		option.textContent = item[label];
-		option.classList.add(item[label].toLowerCase());
-		selector.appendChild(option);
-	});
-};
-
-const validateCategoryName = (categoryName) => {
-	categoryName.length >= 4 && categoryName.length <= 20
-		? "isValidCategoryName"
-		: (alert("Category name must be between 4 and 20 characters"), "isNotValidCategoryName");
-};
-
-//<=== Functions ===>
-
-const createNewCategory = (categoryName, icon, color) => {
-	const categoryTemplate = (id, name, icon, color) => {
+function createNewCategory(categoryName, icon, color) {
+	const generateCategory = (id, categoryName, icon, color) => {
 		const categoryTemplate = document.querySelector("#category-template").content.cloneNode(true);
 
 		const newCategory = categoryTemplate.querySelector("li");
@@ -65,40 +49,89 @@ const createNewCategory = (categoryName, icon, color) => {
 		newCategory.classList.add(color.toLowerCase());
 		newCategory.id = id;
 
-		newCategoryName.textContent = name;
+		newCategoryName.textContent = categoryName;
 		newCategoryIcon.textContent = icon;
 		newCategoryEdit.textContent = "✏️";
 		newCategoryDelete.textContent = "🗑️";
 
-		newCategoryDelete.addEventListener("click", deleteCategoryHandler);
-		newCategoryEdit.addEventListener("click", editCategoryHandler);
-		//category.addEventListener("click", showCategoryHandler);
+		const editCategory = (event) => {};
+		const deleteCategory = (event) => {
+			const categoryIndex = categoryArray.findIndex((category) => category.id == id) + 1;
+			categoryArray.splice(categoryIndex, 1);
+			incrementId = categoryArray.length + 1;
+			newCategory.remove();
+
+			setCategoryInLocalStorage(categoryArray);
+			if (categoryArray.length == 0) localStorage.removeItem("categories");
+		};
+
+		newCategoryEdit.addEventListener("click", editCategory);
+		newCategoryDelete.addEventListener("click", deleteCategory);
 
 		return newCategory;
 	};
 
-	const newCategory = categoryTemplate(incrementId++, categoryName, icon, color);
+	const newCategory = generateCategory(incrementId++, categoryName, icon, color);
+	const categoryInfo = { id: `${incrementId}`, name: categoryName, icon: icon, color: color };
 
-	categoriesList.append(newCategory);
-	categoriesArray.push({ id: `${incrementId}`, name: categoryName, icon: icon, color: color });
-};
+	categoryList.append(newCategory);
+	categoryArray.push(categoryInfo);
+}
 
-//<=== Event Handlers ===>
+(function initialize() {
+	const { form, formNameInput, iconSelector, colorPicker } = formElements;
 
-const localStorageHandler = (event) => {
-	const categories = JSON.parse(localStorage.getItem("categories"));
-	categories.map((category) => createNewCategory(category.name, category.icon, category.color));
-};
+	const initialState = (type, value, color) => {
+		type.value = value;
+		type.classList.add(color.toLowerCase());
+	};
 
-const addCategoryHandler = (event) => {
-	event.preventDefault();
-	const categoryName = categoryNameInput.value.trim();
-	const icon = iconSelector.value;
-	const color = colorSelector.value;
-	validateCategoryName(categoryName);
-	createNewCategory(categoryName, icon, color);
-	setCategoryInLocalStorage(categoriesArray);
-};
+	const localStorageHandler = (event) => {
+		const categories = JSON.parse(localStorage.getItem("categories"));
+		categories.map((category) => createNewCategory(category.name, category.icon, category.color));
+	};
+
+	const populateList = (palette, selector, label) =>
+		palette.map((item) => {
+			const option = document.createElement("option");
+			option.value = item[label];
+			option.textContent = item[label];
+			option.classList.add(item[label].toLowerCase());
+			selector.appendChild(option);
+		});
+
+	const addCategory = (event) => {
+		event.preventDefault();
+		const validateCategoryName = (categoryName) =>
+			categoryName.length >= 4 && categoryName.length <= 20
+				? "isValidCategoryName"
+				: (alert("Category name must be between 4 and 20 characters"), "isNotValidCategoryName");
+
+		const categoryName = formNameInput.value.trim();
+		const icon = iconSelector.value;
+		const color = colorPicker.value;
+		validateCategoryName(categoryName);
+		createNewCategory(categoryName, icon, color);
+		setCategoryInLocalStorage(categoryArray);
+	};
+
+	const colorChangeHandler = (event) => {
+		const color = event.target.value;
+		iconSelector.classList.remove(iconSelector.classList[1]);
+		colorPicker.classList.remove(colorPicker.classList[1]);
+		iconSelector.classList.add(color.toLowerCase());
+		colorPicker.classList.add(color.toLowerCase());
+	};
+
+	populateList(palette.color, colorPicker, "name");
+	populateList(palette.icon, iconSelector, "value");
+	initialState(colorPicker, "Coral", "coral");
+	initialState(iconSelector, "💼", "coral");
+
+	form.addEventListener("submit", addCategory);
+	colorPicker.addEventListener("change", colorChangeHandler);
+	localStorage.getItem("categories") ? localStorageHandler() : null;
+})();
 
 // const showCategoryHandler = (event) => {
 // 	const category = event.target.closest("li");
@@ -114,49 +147,12 @@ const addCategoryHandler = (event) => {
 // 	backButton.addEventListener("click", backHandler);
 // };
 
-const colorChangeHandler = (event) => {
-	const color = event.target.value;
-	colorSelector.classList.remove(colorSelector.classList[1]);
-	iconSelector.classList.remove(iconSelector.classList[1]);
-
-	colorSelector.classList.add(color.toLowerCase());
-	iconSelector.classList.add(color.toLowerCase());
-};
-
-const deleteCategoryHandler = (event) => {
-	const category = event.target.closest("li");
-	const categoryName = category.querySelector("h2");
-	const categoryId = parseInt(category.id);
-	const categoryIndex = categoriesArray.findIndex((category) => category.id == categoryId) + 1;
-	categoriesArray.splice(categoryIndex, 1);
-	setCategoryInLocalStorage(categoriesArray);
-	category.remove();
-};
-
-const editCategoryHandler = (event) => {
-	// Get the category from the categories array
-	// Populate the form with the category info
-	// Remove the category from the list
-};
-
-const backHandler = (event) => {
-	const category = event.target.closest("li");
-	const categories = document.querySelectorAll(`li:not(#${category.id})`);
-	const buttons = category.querySelectorAll("button");
-	categories.forEach((category) => category.classList.remove("hidden"));
-	buttons.forEach((button) => button.classList.remove("hidden"));
-	category.classList.remove("modal");
-	event.target.remove();
-};
-
-// <=== Program ===>
-
-initialState(iconSelector, "Coral");
-initialState(colorSelector, "Coral");
-
-populateList(palette.icon, iconSelector, "value");
-populateList(palette.color, colorSelector, "name");
-
-window.addEventListener("load", localStorageHandler);
-form.addEventListener("submit", addCategoryHandler);
-colorSelector.addEventListener("change", colorChangeHandler);
+// const backHandler = (event) => {
+// 	const category = event.target.closest("li");
+// 	const categories = document.querySelectorAll(`li:not(#${category.id})`);
+// 	const buttons = category.querySelectorAll("button");
+// 	categories.forEach((category) => category.classList.remove("hidden"));
+// 	buttons.forEach((button) => button.classList.remove("hidden"));
+// 	category.classList.remove("modal");
+// 	event.target.remove();
+// };
