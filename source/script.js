@@ -173,27 +173,3 @@ function createNewCategory(categoryName, icon, color) {
 	colorPicker.addEventListener("change", colorChangeHandler);
 	localStorage.getItem("categories") ? localStorageHandler() : null;
 })();
-
-// const showCategoryHandler = (event) => {
-// 	const category = event.target.closest("li");
-// 	const buttons = document.querySelectorAll("button");
-// 	const categories = document.querySelectorAll(`li:not(#${category.getAttribute("id")})`);
-// 	const backButton = document.createElement("button");
-// 	categories.forEach((category) => category.classList.add("hidden"));
-// 	buttons.forEach((button) => button.classList.add("hidden"));
-// 	backButton.textContent = "Back";
-// 	backButton.classList.add("button");
-// 	category.append(backButton);
-// 	category.classList.add("modal");
-// 	backButton.addEventListener("click", backHandler);
-// };
-
-// const backHandler = (event) => {
-// 	const category = event.target.closest("li");
-// 	const categories = document.querySelectorAll(`li:not(#${category.id})`);
-// 	const buttons = category.querySelectorAll("button");
-// 	categories.forEach((category) => category.classList.remove("hidden"));
-// 	buttons.forEach((button) => button.classList.remove("hidden"));
-// 	category.classList.remove("modal");
-// 	event.target.remove();
-// };
