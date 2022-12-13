@@ -1,6 +1,6 @@
 :root {
 	/* Font-sizing */
-	--fontSizeHuge: clamp(1.5rem, 5vw, 3rem);
+	--fontSizeHuge: clamp(1.5rem, 5vw, 2rem);
 	--fontSizeLarge: clamp(1rem, 5vw, 2rem);
 	--fontSizeMedium: clamp(1rem, 5vw, 2rem);
 	--fontSizeSmall: clamp(0.75rem, 5vw, 1.5rem);
@@ -17,9 +17,10 @@
 	--gapLarge: 1.5rem;
 
 	/* Colors */
-	--colorPrimary: #4dcef2;
-	--colorSecondary: #4dadf2;
-	--colorTertiary: #4d8cf2;
+	--colorPrimary: #12212d;
+	--colorSecondary: #192b3b;
+	--colorTertiary: #5995d8;
+	--colorAccent: #2b4a67;
 }
 
 * {
@@ -27,6 +28,7 @@
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
+	color: white;
 }
 
 .content {
@@ -62,6 +64,7 @@
 .form-name__input {
 	padding: var(--gapSmall);
 	font-size: var(--fontSizeSmall);
+	background-color: var(--colorSecondary);
 	border: 1px solid var(--colorSecondary);
 	width: 100%;
 }
@@ -74,15 +77,15 @@
 }
 
 .form-icon__input {
-	font-size: var(--fontSizeLarge);
+	font-size: var(--fontSizeHuge);
 	background-color: var(--colorPrimary);
-	padding: fit-content;
+	padding: var(--gapSmall) 0;
 	cursor: pointer;
 	border: 1px solid var(--colorSecondary);
 }
 
 .form-color__input {
-	padding: var(--gapSmall);
+	padding: var(--gapSmall) 0;
 	border: 1px solid var(--colorSecondary);
 }
 
@@ -98,11 +101,6 @@
 	align-self: flex-end;
 }
 
-.content-separator {
-	margin: var(--gapMedium) 0;
-	border: 1px solid var(--colorSecondary);
-}
-
 .left-column,
 .right-column,
 .category-item {
@@ -111,7 +109,7 @@
 }
 
 .modal {
-    height: 20vh;
+	height: 20vh;
 }
 
 .hidden {
@@ -119,6 +117,11 @@
 }
 
 .category-item {
+	justify-content: space-between;
+}
+
+.selector-container {
+	display: flex;
 	justify-content: space-between;
 }
 
@@ -130,12 +133,40 @@
 	justify-content: flex-end;
 }
 
+.content-separator {
+	margin: var(--gapSmall) 0;
+	border: 1px solid var(--colorSecondary);
+}
+
+.category-list {
+	gap: var(--gapSmall);
+	display: flex;
+	flex-direction: column;
+}
+
+.category-item {
+	padding: var(--gapSmall);
+	background-color: var(--colorSecondary);
+	border: 1px solid var(--colorAccent);
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.category-item__icon {
+	font-size: var(--fontSizeHuge);
+}
+
+.category-item__name {
+	font-size: var(--fontSizeMedium);
+	font-weight: var(--fontWeightMedium);
+}
+
 /* Hover and focus states */
 
 .form-name__input:hover,
 .button:hover,
 .category-item:hover {
-	background-color: var(--colorSecondary);
+	background-color: var(--colorTertiary);
 }
 
 .button:active,
