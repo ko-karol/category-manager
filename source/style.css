@@ -1,8 +1,8 @@
 :root {
 	/* Font-sizing */
 	--fontSizeHuge: clamp(1.5rem, 5vw, 2rem);
-	--fontSizeLarge: clamp(1rem, 5vw, 2rem);
-	--fontSizeMedium: clamp(1rem, 5vw, 2rem);
+	--fontSizeLarge: clamp(1rem, 5vw, 1.5rem);
+	--fontSizeMedium: clamp(0.5rem, 5vw, 1rem);
 	--fontSizeSmall: clamp(0.75rem, 5vw, 1.5rem);
 
 	/* Font-weights */
@@ -46,7 +46,7 @@
 }
 
 .title {
-	font-size: var(--fontSizeHuge);
+	font-size: var(--fontSizeMedium);
 	font-weight: var(--fontWeightBold);
 }
 
@@ -66,7 +66,6 @@
 	font-size: var(--fontSizeSmall);
 	background-color: var(--colorSecondary);
 	border: 1px solid var(--colorSecondary);
-	width: 100%;
 }
 
 .selector-container {
@@ -80,12 +79,14 @@
 	font-size: var(--fontSizeHuge);
 	background-color: var(--colorPrimary);
 	padding: var(--gapSmall) 0;
+	justify-content: center;
 	cursor: pointer;
 	border: 1px solid var(--colorSecondary);
 }
 
 .form-color__input {
-	padding: var(--gapSmall) 0;
+	padding: var(--gapSmall) clamp(0.5rem, 5vw, 2rem);
+	font-size: var(--fontSizeSmall);
 	border: 1px solid var(--colorSecondary);
 }
 
@@ -106,6 +107,11 @@
 .category-item {
 	display: flex;
 	align-items: center;
+	gap: var(--gapSmall);
+}
+
+.error {
+	background-color: red;
 }
 
 .modal {
@@ -148,6 +154,7 @@
 	padding: var(--gapSmall);
 	background-color: var(--colorSecondary);
 	border: 1px solid var(--colorAccent);
+	border-top: none;
 	border-radius: 5px;
 	cursor: pointer;
 }
@@ -174,6 +181,10 @@
 	background-color: var(--colorTertiary);
 }
 
+.form-name__input:focus {
+	background-color: var(--colorAccent);
+	outline: none;
+}
 /* Category Color Presets */
 
 .coral {

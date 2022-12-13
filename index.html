@@ -11,44 +11,39 @@
 	<body>
 		<template id="category-template">
 			<li class="category-item">
-                <div class="left-column">
-				    <span class="category-item__icon"></span>
-				    <h2 class="category-item__name"></h2>
-                </div>
-                <div class="right-column">
-				    <button class="button edit">Edit</button>
-				    <button class="button delete">Delete</button>
-                </div>
+				<div class="left-column">
+					<span class="category-item__icon"></span>
+					<h2 class="category-item__name"></h2>
+				</div>
+				<div class="right-column">
+					<button class="button edit">Edit</button>
+					<button class="button delete">Delete</button>
+				</div>
 			</li>
 		</template>
 
 		<main class="content">
+			<h1 class="title">Add to inventory</h1>
 			<form id="form" class="form">
-                <h1 class="title">Add to inventory</h1>
-                <h2 class="form__heading">Create a new category</h2>
+				<h2 class="form__heading">Create a new category</h2>
 				<label for="form-name-input" class="form-name__label" required>Category name:</label>
-				<input
-					id="form-name-input"
-                    class="form-name__input"
-					type="text"
-					placeholder="Enter a category name">
-                </input>
+				<input id="form-name-input" class="form-name__input" type="text" placeholder="Enter a category name"/>
 
-                <div class="selector-container">
-                    <div class="left-column">
-				        <label for="icon-selector" class="form-icon__label">Icon:</label>
-				        <select id="icon-selector" class="form-icon__input"></select>
-                    </div>
-                    <div class="right-column">
-				        <label for="color-picker" class="form-color__label">Color:</label>
-				        <select id="color-picker" class="form-color__input"></select>
-                    </div>
-                </div>
+				<div class="selector-container">
+					<div class="left-column">
+						<label for="icon-selector" class="form-icon__label">Icon:</label>
+						<select id="icon-selector" class="form-icon__input"></select>
+					</div>
+					<div class="right-column">
+						<label for="color-picker" class="form-color__label">Color:</label>
+						<select id="color-picker" class="form-color__input"></select>
+					</div>
+				</div>
 
-				<button id="add" class="button button__next" type="submit">Next</button>
+				<button id="add" class="button" type="submit">Add</button>
 			</form>
 
-            <div class="content-separator"></div>
+			<div class="content-separator"></div>
 
 			<ul id="category-list" class="category-list"> </ul>
 		</main>
