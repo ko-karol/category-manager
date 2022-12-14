@@ -1,11 +1,13 @@
 ## _Category Manager_
 
-The aim of this project is to build a "category manager" mini-app. The app will have the following features: 
+<img align="right" src="https://user-images.githubusercontent.com/105356599/207470553-e3f9dda8-6166-452b-ab8f-da2ebb76af7c.png" />
 
-- [x] Add category to the list using name, icon and colour inputs.
-- [x] Remove category from the list
-- [ ] Edit the category
-- [ ] Display the selected category
-- [ ] "Next" button will show the next category
-- [ ] "Back" button will show all categories in the list
-- [x] Each category should be added, retrieved and removed from LocalStorage.
+This app allows the user to create and manage categories. The app will have the following features: 
+
+- [x] Add category to the list using name, icon and colour inputs,
+- [x] Adding, removing and retrieving local storage,
+- [ ] "Back" button (show all categories),
+- [ ] "Next" button (show next category),
+- [ ] Display the selected category,
+- [x] Remove categories,
+- [ ] Edit categories.
