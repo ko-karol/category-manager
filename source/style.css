@@ -39,10 +39,9 @@
 	padding: var(--gapMedium);
 	display: flex;
 	flex-direction: column;
-	width: fit-content;
 	margin: 0 auto;
+	height: 100vh;
 	border-radius: 5px;
-	margin-top: 5rem;
 }
 
 .title {
@@ -72,8 +71,6 @@
 .form-name__label,
 .form-icon__label,
 .form-color__label {
-	max-width: 50%;
-	border-bottom: 1px solid var(--colorAccent);
 	font-size: var(--fontSizeSmall);
 	font-weight: var(--fontWeightMedium);
 }
@@ -209,4 +206,10 @@
 }
 .pinkish {
 	background-color: #fcc2d2;
+}
+
+@media (min-width: 768px) {
+	.content {
+		max-width: 25%;
+	}
 }
