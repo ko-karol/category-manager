@@ -43,6 +43,7 @@ const localStorageHandler = (event) => {
 	categories.map((category) => createNewCategory(category.name, category.icon, category.color));
 };
 
+// Helper to generate a new category using the template in the HTML. The category is created using the template, then the id, name, icon and edit/delete buttons are set.
 const generateCategory = (id, categoryName, icon, color) => {
 	const categoryTemplate = document.querySelector("#category-template").content.cloneNode(true);
 	const newCategory = categoryTemplate.querySelector("li");
@@ -104,9 +105,7 @@ const populateList = (palette, selector, label) => {
 		const option = document.createElement("option");
 		option.value = item[label];
 		option.textContent = item[label];
-
-		// A bit bugged, there should be no emoji classes... but it works for now.
-		option.classList.add(item[label].toLowerCase());
+		option.classList.add(item[label].toLowerCase()); // A bit bugged, there should be no emoji classes... but it works for now.
 		selector.appendChild(option);
 	});
 };
