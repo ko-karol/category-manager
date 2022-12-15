@@ -156,8 +156,8 @@ const addCategory = (event) => {
 	form.reset();
 };
 
-// Use helper functions to start the app with some initializers.
-(function initialize() {
+(() => {
+	// Use helper functions to start the app with some initializers.
 	populateList(colorPalette, colorSelector, "name");
 	populateList(iconPalette, iconSelector, "value");
 	initialState(colorSelector, "Coral", "coral");
