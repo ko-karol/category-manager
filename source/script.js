@@ -43,7 +43,6 @@ const localStorageHandler = (event) => {
 	categories.map((category) => createNewCategory(category.name, category.icon, category.color));
 };
 
-// Function to create a new category using the template in generateCategory, then append it to the category list and push it to the category array.
 const generateCategory = (id, categoryName, icon, color) => {
 	const categoryTemplate = document.querySelector("#category-template").content.cloneNode(true);
 	const newCategory = categoryTemplate.querySelector("li");
@@ -62,18 +61,20 @@ const generateCategory = (id, categoryName, icon, color) => {
 	newCategoryIcon.classList.add(color.toLowerCase());
 
 	// Add event listeners to the edit and delete buttons.
-	//TODO: newCategoryEdit.addEventListener("click", editCategory);
+	// newCategoryEdit.addEventListener("click", editCategory);
 	newCategoryDelete.addEventListener("click", deleteCategory);
 
 	return newCategory;
 };
+
+// Function to create a new category using the template in generateCategory, then append it to the category list and push it to the category array.
 function createNewCategory(categoryName, icon, color) {
 	const categoryInfo = { id: incrementId, name: categoryName, icon: icon, color: color };
-
-	// Append the new category to the category list and push it to the category array.
-	categoryList.append(generateCategory(incrementId++, categoryName, icon, color));
+	const generatedCategory = generateCategory(incrementId++, categoryName, icon, color);
+	categoryList.append(generatedCategory);
 	categoryArray.push(categoryInfo);
 }
+
 // When the category is clicked, the category is displayed by itself with next and back buttons. //TODO: Add the ability to display the category's tasks etc.
 //? const showCategory = (event) => {};
 // When the edit button is clicked, the category is editable. //TODO: Add the ability to edit the category name, icon and color.
@@ -168,5 +169,3 @@ const addCategory = (event) => {
 
 	localStorage.getItem("categories") ? localStorageHandler() : null;
 })();
-
-// convert the whole above code to pure functional programming and use the functional programming paradigm to make it more readable and maintainable.

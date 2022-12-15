@@ -17,10 +17,10 @@
 	--gapSmall: clamp(0.1rem, 5vw, 0.5rem);
 
 	/* Colors */
-	--colorPrimary: #12212d;
-	--colorSecondary: #192b3b;
-	--colorTertiary: #5995d8;
-	--colorAccent: #2b4a67;
+	--colorPrimary: hsl(207, 43%, 12%);
+	--colorSecondary: hsl(208, 40%, 16%);
+	--colorTertiary: hsl(212, 62%, 60%);
+	--colorAccent: hsl(209, 41%, 29%);
 }
 
 * {
@@ -190,20 +190,20 @@
 /* Category Color Presets */
 
 .coral {
-	background-color: #ff8370;
+	background-color: hsl(8, 100%, 72%);
 }
 .blue-green {
-	background-color: #00b1b0;
+	background-color: hsl(180, 100%, 35%);
 }
 .freesia {
-	background-color: #fec84d;
+	background-color: hsl(42, 99%, 65%);
 }
 .fuschia {
-	background-color: #e42256;
+	background-color: hsl(344, 78%, 51%);
 }
 .lilac {
-	background-color: #bd97cb;
+	background-color: hsl(284, 33%, 69%);
 }
 .pinkish {
-	background-color: #fcc2d2;
+	background-color: hsl(343, 91%, 87%);
 }
