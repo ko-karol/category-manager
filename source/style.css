@@ -12,7 +12,7 @@
 	--fontWeightBold: 700;
 
 	/* Guidelines */
-	--gapLarge: clamp(1rem, 5vw, 1rem);
+	--gapLarge: clamp(1rem, 5vw, 2rem);
 	--gapMedium: clamp(0.5rem, 5vw, 1rem);
 	--gapSmall: clamp(0.1rem, 5vw, 0.5rem);
 
@@ -34,14 +34,14 @@
 .content {
 	background-color: var(--colorPrimary);
 	box-shadow: 0 0 100px 0 var(--colorAccent);
-	border: 1px solid var(--colorSecondary);
+	border: 1px solid var(--colorAccent);
 	gap: var(--gapMedium);
 	padding: var(--gapMedium);
 	display: flex;
 	flex-direction: column;
 	margin: 0 auto;
+	max-width: 500px;
 	height: 100vh;
-	border-radius: 5px;
 }
 
 .title {
@@ -92,7 +92,7 @@
 }
 
 .form-color__input {
-	height: 100%;
+	padding: var(--gapSmall);
 	font-size: var(--fontSizeSmall);
 	border: 1px solid var(--colorSecondary);
 }
@@ -206,10 +206,4 @@
 }
 .pinkish {
 	background-color: #fcc2d2;
-}
-
-@media (min-width: 768px) {
-	.content {
-		max-width: 25%;
-	}
 }
